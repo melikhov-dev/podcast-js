@@ -16,14 +16,13 @@ exports.render = function(data) {
 				<copyright>${ data.meta.copyright }</copyright>
 				<language>${ data.meta.language }</language>
 				<link>${ data.meta.url }</link>
-
 				<atom:link href="${ data.meta.url }feed/" rel="self" type="application/rss+xml"/>
 				<itunes:subtitle>${ data.meta.subtitle }</itunes:subtitle>
 				<itunes:type>${ data.meta.type }</itunes:type>
 				<itunes:author>${
-					data.meta.authors.map(author =>
-						`${ author }`
-					).join(', ')
+					data.meta.authors
+						.map(author => author)
+						.join(', ')
 				}</itunes:author>
 				<itunes:explicit>${ data.meta.explicit }</itunes:explicit>
 				<itunes:owner>
@@ -52,9 +51,9 @@ exports.render = function(data) {
 								this.duration(`src/mp3/${ episode.fileSlug }.mp3`)
 							}</itunes:duration>
 							<itunes:author>${
-								episode.data.hosts.map(host =>
-									`${ host }`
-								).join(', ')
+								episode.data.hosts
+									.map(host => host)
+									.join(', ')
 							}</itunes:author>
 							<itunes:explicit>${ data.meta.explicit }</itunes:explicit>
 							<itunes:summary>${
@@ -66,9 +65,9 @@ exports.render = function(data) {
 							}: ${
 								episode.data.title
 							}. ${
-								episode.data.hosts.map(host =>
-									`${ host }`
-								).join(', ')
+								episode.data.hosts
+									.map(host => host)
+									.join(', ')
 							}</itunes:summary>
 							<itunes:image href="${ data.meta.url }cover.png"/>
 						</item>

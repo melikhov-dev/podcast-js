@@ -26,9 +26,7 @@ module.exports = (config) => {
 	}
 
 	config.addAsyncFilter('duration', async (path) => {
-		const duration = await getDuration(path);
-		console.log(duration);
-		return duration;
+		return await getDuration(path);
 	});
 
 	config.addFilter('htmlmin', (value) => {
