@@ -11,7 +11,6 @@ exports.render = function(data) {
 			version="2.0"
 		>
 			<channel>
-
 				<title>${ data.meta.title }</title>
 				<description>${ data.meta.description }</description>
 				<copyright>${ data.meta.copyright }</copyright>
@@ -35,23 +34,47 @@ exports.render = function(data) {
 				<itunes:category text="${ data.meta.category }">
 					<itunes:category text="${ data.meta.subcategory }"/>
 				</itunes:category>
+				${data.collections.episode.map(
+					episode => `
+						<item>
+							<title>${ episode.data.title }</title>
+							<link>${ data.meta.url }${ episode.fileSlug }/</link>
+							<pubDate>${ episode.date.toUTCString() }</pubDate>
+							<description><![CDATA[${ this.htmlmin(episode.content) }]]></description>
+							<guid isPermaLink="true">${ data.meta.url }episodes/${ episode.fileSlug }.mp3</guid>
+							<enclosure
+								type="audio/mpeg"
+								url="${ data.meta.url }episodes/${ episode.fileSlug }.mp3"
+								length="${ this.duration(`src/mp3/${ episode.fileSlug }.mp3`) }"
+							/>
+							<itunes:episode>${ episode.fileSlug }</itunes:episode>
+							<itunes:duration>${
+								this.duration(`src/mp3/${ episode.fileSlug }.mp3`)
+							}</itunes:duration>
+							<itunes:author>${
+								episode.data.hosts.map(host =>
+									`${ host }`
+								).join(', ')
+							}</itunes:author>
+							<itunes:explicit>${ data.meta.explicit }</itunes:explicit>
+							<itunes:summary>${
+								episode.date.toLocaleString('ru', {
+									year: 'numeric',
+									month: 'long',
+									day: 'numeric'
+								}).replace(' г.', '')
+							}: ${
+								episode.data.title
+							}. ${
+								episode.data.hosts.map(host =>
+									`${ host }`
+								).join(', ')
+							}</itunes:summary>
+							<itunes:image href="${ data.meta.url }cover.png"/>
+						</item>
+					`
+				).join('')}
 			</channel>
-			${data.collections.episode.map(
-				episode => `
-					<item>
-						<title>${ episode.data.title }</title>
-						<link>${ data.meta.url }${ episode.fileSlug }/</link>
-						<pubDate>${ episode.date.toUTCString() }</pubDate>
-						<description><![CDATA[${ this.htmlmin(episode.content) }]]></description>
-						<guid isPermaLink="true">${ data.meta.url }episodes/${ episode.fileSlug }.mp3</guid>
-						<enclosure
-							type="audio/mpeg"
-							url="${ data.meta.url }episodes/${ episode.fileSlug }.mp3"
-							length="${ this.duration(`src/mp3/${ episode.fileSlug }.mp3`) }"
-						/>
-					</item>
-				`
-			).join('')}
 		</rss>
 	`;
 };
