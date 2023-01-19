@@ -1,0 +1,17 @@
+{
+	"private": true,
+	"scripts": {
+		"build": "eleventy"
+	},
+	"engines": {
+		"node": ">=16",
+		"npm": ">=8"
+	},
+	"devDependencies": {
+		"@11ty/eleventy": "^2.0.0-beta.1",
+		"html-minifier": "^4.0.0",
+		"js-yaml": "^4.1.0",
+		"minify-xml": "^3.4.0",
+		"music-metadata": "7.12.3"
+	}
+}
