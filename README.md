@@ -5,7 +5,7 @@ npm install
 npm run build
 ```
 
-dist/index.xml:
+src/feed/index.11ty.js → dist/index.xml
 
 ```xml
 <enclosure
