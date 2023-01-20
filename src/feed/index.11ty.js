@@ -87,7 +87,8 @@ exports.render = async function(data) {
 				<itunes:image href="${ data.meta.url }cover.png"/>
 				<itunes:category text="${ data.meta.category }">
 					<itunes:category text="${ data.meta.subcategory }"/>
-				</itunes:category>${await getEpisodes(data)}
+				</itunes:category>
+				${await getEpisodes(data)}
 			</channel>
 		</rss>
 	`;
