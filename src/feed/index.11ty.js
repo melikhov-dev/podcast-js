@@ -20,8 +20,8 @@ exports.render = function(data) {
 				<itunes:subtitle>${ data.meta.subtitle }</itunes:subtitle>
 				<itunes:type>${ data.meta.type }</itunes:type>
 				<itunes:author>${
-					data.meta.authors
-						.map(author => author)
+					data.meta.hosts
+						.map(host => host)
 						.join(', ')
 				}</itunes:author>
 				<itunes:explicit>${ data.meta.explicit }</itunes:explicit>
@@ -39,7 +39,17 @@ exports.render = function(data) {
 							<title>${ episode.data.title }</title>
 							<link>${ data.meta.url }${ episode.fileSlug }/</link>
 							<pubDate>${ episode.date.toUTCString() }</pubDate>
-							<description><![CDATA[${ this.htmlmin(episode.content) }]]></description>
+							<description><![CDATA[<ul>${
+								episode.data.chapters
+									.map(chapter => `<li>${ chapter.time } ${ chapter.title }</li>`)
+									.join('')
+							}</ul><ul>${
+								episode.data.hosts
+									.map(host => `<li>${ host }</li>`)
+									.join('')
+							}</ul>${
+								this.htmlmin(episode.content)
+							}]]></description>
 							<guid isPermaLink="true">${ data.meta.url }episodes/${ episode.fileSlug }.mp3</guid>
 							<enclosure
 								type="audio/mpeg"
