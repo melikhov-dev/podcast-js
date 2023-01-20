@@ -25,8 +25,8 @@ module.exports = (config) => {
 		return formatted;
 	}
 
-	config.addAsyncFilter('duration', async (path) => {
-		return await getDuration(path);
+	config.addJavaScriptFunction('duration', (path) => {
+		return getDuration(path);
 	});
 
 	config.addFilter('htmlmin', (value) => {
